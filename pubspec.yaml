@@ -1,0 +1,48 @@
+name: app # Đổi tên cho chuyên nghiệp hơn (lúc trước là app)
+description: "Lecturer Scheduling System - Capstone Project"
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0" # Đảm bảo dùng Dart 3 mới nhất (quan trọng cho Records/Patterns)
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.2
+
+  # --- 1. CÁC THƯ VIỆN LÕI (CORE LIBS) ---
+  # Quản lý trạng thái (State Management)
+  flutter_riverpod: ^2.5.1
+
+  # Điều hướng màn hình (Navigation)
+  go_router: ^14.2.0
+
+  # Font chữ & Icons
+  google_fonts: ^8.0.0
+  cupertino_icons: ^1.0.8
+  intl: ^0.19.0
+
+  # --- 2. CÁC GÓI NỘI BỘ (LOCAL PACKAGES) ---
+  # Lưu ý: Tên (key) ở đây phải trùng với 'name' trong pubspec của từng gói con
+  api:
+    path: ./packages/api
+
+  models:
+    path: ./packages/models
+
+  ui:
+    path: ./packages/ui
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # Công cụ nhắc code chuẩn (Lints)
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/logo.png

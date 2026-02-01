@@ -1,0 +1,23 @@
+name: api
+description: Networking client for Thesis App.
+version: 1.0.0
+publish_to: "none"
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Thư viện gọi mạng xịn nhất
+  dio: ^5.4.3
+
+  # Package API cần dùng class User/Schedule từ package Models
+  models:
+    path: ../models
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
