@@ -149,15 +149,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                             controller: _passController),
 
                         const SizedBox(height: 8),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {},
-                            child: Text('Forgot Password?',
-                                style: AppTextStyles.bodyMedium
-                                    .copyWith(color: AppColors.primary)),
-                          ),
-                        ),
 
                         const SizedBox(height: 24),
 

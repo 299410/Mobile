@@ -61,17 +61,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     }
   }
 
-  // Helper to parse 'Block X' to int
-  int _parseSlot(String slotName) {
-    // Expected format 'Block 1', 'Block 2'... or just '1'
-    try {
-      final number = slotName.replaceAll(RegExp(r'[^0-9]'), '');
-      return int.parse(number);
-    } catch (e) {
-      return 1; // Default
-    }
-  }
-
   Map<String, List<_ScheduleEvent>> get _weekSchedule {
     final Map<String, List<_ScheduleEvent>> map = {};
     final weekEnd = _currentWeekStart.add(const Duration(days: 6));
@@ -83,16 +72,18 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           item.date.isBefore(weekEnd.add(const Duration(days: 1)))) {
         // Format Key: Mon-1, Tue-2...
         final dayName = DateFormat('E').format(item.date); // Mon, Tue...
-        final slotNum = _parseSlot(item.slot);
+        final slotNum = item.blockId;
         final key = '$dayName-$slotNum';
 
         if (!map.containsKey(key)) map[key] = [];
 
         map[key]!.add(_ScheduleEvent(
-          title: 'Defense Council',
-          role: item.role,
-          timeRange: 'Block ${item.slot}', // Or map generic times
-          location: item.details,
+          title: item.blockName,
+          role: item.roleName,
+          timeRange: '${item.startTime} - ${item.endTime}',
+          location: item.blockName,
+          lecturerName: item.lecturerName,
+          lecturerEmail: item.lecturerEmail,
         ));
       }
     }
@@ -414,6 +405,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               _buildPopupRow(Icons.access_time, 'Time', event.timeRange),
               const SizedBox(height: 16),
               _buildPopupRow(Icons.location_on, 'Location', event.location),
+              const SizedBox(height: 16),
+              _buildPopupRow(Icons.school, 'Lecturer',
+                  '${event.lecturerName}\n${event.lecturerEmail}'),
               const SizedBox(height: 24),
               // Close button
               SizedBox(
@@ -462,11 +456,15 @@ class _ScheduleEvent {
   final String role;
   final String timeRange;
   final String location;
+  final String lecturerName;
+  final String lecturerEmail;
 
   _ScheduleEvent({
     required this.title,
     required this.role,
     required this.timeRange,
     required this.location,
+    required this.lecturerName,
+    required this.lecturerEmail,
   });
 }

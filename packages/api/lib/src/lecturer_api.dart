@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:models/models.dart';
 import '../api.dart';
-import 'auth_state.dart';
 
 class LecturerApi {
   final Dio _dio;
@@ -122,6 +121,41 @@ class LecturerApi {
     }
   }
 
+  Future<List<DateTime>> getLecturerAvailability(String roundId) async {
+    try {
+      final token = _authState.accessToken;
+      final userId = _authState.userId;
+
+      if (userId == null) {
+        throw Exception('User ID not found');
+      }
+
+      final response = await _dio.get(
+        '/v1/availability/lecturer/$userId/round/$roundId',
+        options: token != null
+            ? Options(headers: {'Authorization': 'Bearer $token'})
+            : null,
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        return data.map((json) {
+          // Assuming response is a list of objects with 'availableDate' or similar
+          // Adjust based on actual API response structure if needed.
+          // If it returns list of strings "2024-06-15":
+          if (json is String) return DateTime.parse(json);
+
+          // If it returns objects:
+          return DateTime.parse(json['availableDate']);
+        }).toList();
+      } else {
+        throw Exception('Failed to load registered availability');
+      }
+    } on DioException catch (e) {
+      throw Exception('Network error: ${e.message}');
+    }
+  }
+
   Future<List<DefenseSchedule>> getSchedule(String lecturerId) async {
     try {
       final token = _authState.accessToken;
@@ -134,20 +168,37 @@ class LecturerApi {
 
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
-        return data.map((json) {
-          return DefenseSchedule(
-            id: json['assignmentId']?.toString() ?? '',
-            lecturerId: lecturerId, // Keep passing the requested ID or use 'me'
-            date: DateTime.parse(json['defenseDate']),
-            slot: json['blockName'] ?? 'Unknown Slot',
-            role: json['roleName'] ?? 'Unknown Role',
-            details: 'Room TBD', // Backend response doesn't include room yet
-          );
-        }).toList();
+        return data.map((json) => DefenseSchedule.fromJson(json)).toList();
       } else {
         throw Exception('Failed to load schedule');
       }
     } on DioException catch (e) {
+      throw Exception('Network error: ${e.message}');
+    }
+  }
+
+  Future<Map<String, dynamic>> getProfile() async {
+    try {
+      final token = _authState.accessToken;
+
+      // Using /v1/users/me as requested
+      const String endpoint = '/v1/users/me';
+      print('DEBUG: Calling endpoint: $endpoint');
+
+      final response = await _dio.get(
+        endpoint,
+        options: token != null
+            ? Options(headers: {'Authorization': 'Bearer $token'})
+            : null,
+      );
+
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        throw Exception('Failed to load profile: ${response.statusCode}');
+      }
+    } on DioException catch (e) {
+      print('DEBUG: API Error: ${e.message}, Response: ${e.response?.data}');
       throw Exception('Network error: ${e.message}');
     }
   }
