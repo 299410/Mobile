@@ -73,7 +73,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             content: Text('Chào mừng thầy ${user.username}'),
-            backgroundColor: AppColors.success),
+            backgroundColor: const Color.from(
+                alpha: 1, red: 0.063, green: 0.725, blue: 0.506)),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -88,6 +89,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    // Responsive values based on screen size
+    final horizontalPadding =
+        screenWidth < 360 ? 16.0 : (screenWidth < 400 ? 24.0 : 32.0);
+    final verticalPadding = screenHeight < 600 ? 24.0 : 40.0;
+    final logoHeight = screenWidth < 360 ? 60.0 : 80.0;
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -107,14 +117,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                       borderRadius: BorderRadius.circular(24)),
                   color: AppColors.surface,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 32, vertical: 40),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: horizontalPadding,
+                        vertical: verticalPadding),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         // Logo
                         SizedBox(
-                          height: 80,
+                          height: logoHeight,
                           child: Image.asset('assets/images/logo.png',
                               fit: BoxFit.contain),
                         ),

@@ -189,6 +189,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   }
 
   Widget _buildTimetableGrid() {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const slots = [
       'Slot 1',
@@ -200,9 +202,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       'Slot 7'
     ];
 
-    const cellWidth = 140.0;
-    const cellHeight = 90.0;
-    const slotLabelWidth = 80.0;
+    // Responsive cell dimensions based on screen width
+    final cellWidth =
+        (screenWidth < 400 ? 100.0 : (screenWidth < 500 ? 120.0 : 140.0));
+    final cellHeight = screenWidth < 400 ? 75.0 : 90.0;
+    final slotLabelWidth = screenWidth < 400 ? 60.0 : 80.0;
 
     return Padding(
       padding: const EdgeInsets.all(12),
@@ -212,7 +216,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           // Day Headers Row
           Row(
             children: [
-              const SizedBox(width: slotLabelWidth), // Empty corner
+              SizedBox(width: slotLabelWidth), // Empty corner
               ...List.generate(days.length, (index) {
                 final dayDate = _currentWeekStart.add(Duration(days: index));
                 return Container(
@@ -434,17 +438,22 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   Widget _buildPopupRow(IconData icon, String label, String value) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(icon, size: 20, color: AppColors.primary),
         const SizedBox(width: 12),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(label, style: AppTextStyles.bodyMedium),
-            Text(value,
-                style: AppTextStyles.bodyLarge
-                    .copyWith(fontWeight: FontWeight.w600)),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(label, style: AppTextStyles.bodyMedium),
+              Text(value,
+                  style: AppTextStyles.bodyLarge
+                      .copyWith(fontWeight: FontWeight.w600),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2),
+            ],
+          ),
         ),
       ],
     );

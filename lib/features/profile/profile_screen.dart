@@ -115,6 +115,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               lecturerInfo['lecturerCode'] ?? data['username'] ?? 'N/A';
 
           // Header + Expanded Body + Footer Pattern
+          final screenHeight = MediaQuery.of(context).size.height;
+          final headerHeight = screenHeight < 600 ? 100.0 : 120.0;
+          final avatarOffset = screenHeight < 600 ? 35.0 : 40.0;
+          final avatarRadius = screenHeight < 600 ? 38.0 : 45.0;
+
           return Column(
             children: [
               // ====== HEADER ======
@@ -122,10 +127,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 clipBehavior: Clip.none,
                 alignment: Alignment.center,
                 children: [
-                  _buildHeader(),
+                  _buildHeader(headerHeight),
                   Positioned(
-                    bottom: -40,
-                    child: _buildAvatar(fullName),
+                    bottom: -avatarOffset,
+                    child: _buildAvatar(fullName, avatarRadius),
                   ),
                 ],
               ),
@@ -208,11 +213,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(double height) {
     return ClipPath(
       clipper: _HeaderClipper(),
       child: Container(
-        height: 120,
+        height: height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -224,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildAvatar(String name) {
+  Widget _buildAvatar(String name, double radius) {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
@@ -239,12 +244,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
       child: CircleAvatar(
-        radius: 45,
+        radius: radius,
         backgroundColor: const Color(0xFFF0F0F0),
         child: Text(
           name.isNotEmpty ? name[0].toUpperCase() : '?',
-          style: const TextStyle(
-            fontSize: 32,
+          style: TextStyle(
+            fontSize: radius * 0.7,
             fontWeight: FontWeight.bold,
             color: AppColors.primary,
           ),

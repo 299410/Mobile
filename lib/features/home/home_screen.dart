@@ -12,7 +12,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final cardSize = (screenWidth - 60) / 2; // 20 padding on each side + 16 gap
+    // Calculate card size with min/max constraints
+    final rawCardSize =
+        (screenWidth - 60) / 2; // 20 padding on each side + 16 gap
+    final cardSize = rawCardSize.clamp(120.0, 200.0); // Min 120, max 200
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
@@ -321,22 +324,31 @@ class _UpcomingScheduleSheetState extends State<_UpcomingScheduleSheet> {
           Row(children: [
             Icon(Icons.access_time, size: 16, color: AppColors.textSecondary),
             const SizedBox(width: 8),
-            Text('${event.startTime} – ${event.endTime}',
-                style: AppTextStyles.bodyMedium)
+            Flexible(
+              child: Text('${event.startTime} – ${event.endTime}',
+                  style: AppTextStyles.bodyMedium,
+                  overflow: TextOverflow.ellipsis),
+            ),
           ]),
           const SizedBox(height: 4),
           Row(children: [
             Icon(Icons.location_on, size: 16, color: AppColors.textSecondary),
             const SizedBox(width: 8),
-            Text('Room ${event.blockName}',
-                style: AppTextStyles
-                    .bodyMedium) // Using blockName as room for now if specific room field missing
+            Flexible(
+              child: Text('Room ${event.blockName}',
+                  style: AppTextStyles.bodyMedium,
+                  overflow: TextOverflow.ellipsis),
+            ),
           ]),
           const SizedBox(height: 4),
           Row(children: [
             Icon(Icons.person, size: 16, color: AppColors.textSecondary),
             const SizedBox(width: 8),
-            Text('Role: ${event.roleName}', style: AppTextStyles.bodyMedium)
+            Flexible(
+              child: Text('Role: ${event.roleName}',
+                  style: AppTextStyles.bodyMedium,
+                  overflow: TextOverflow.ellipsis),
+            ),
           ]),
         ],
       ),

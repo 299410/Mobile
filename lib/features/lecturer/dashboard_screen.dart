@@ -85,7 +85,11 @@ class _LecturerDashboardScreenState extends State<LecturerDashboardScreen> {
                           Icon(Icons.info_outline,
                               size: 16, color: AppColors.textSecondary),
                           const SizedBox(width: 4),
-                          Text(round.status, style: AppTextStyles.bodyMedium),
+                          Flexible(
+                            child: Text(round.status,
+                                style: AppTextStyles.bodyMedium,
+                                overflow: TextOverflow.ellipsis),
+                          ),
                         ],
                       ),
                     ),

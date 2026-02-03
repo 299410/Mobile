@@ -22,6 +22,9 @@ class _MainShellState extends State<MainShell> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final navPadding = screenWidth < 360 ? 8.0 : 16.0;
+
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
@@ -33,14 +36,19 @@ class _MainShellState extends State<MainShell> {
         shadowColor: Colors.black.withOpacity(0.1),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: EdgeInsets.symmetric(horizontal: navPadding, vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildNavItem(0, Icons.home_outlined, Icons.home, 'Home'),
-                _buildNavItem(1, Icons.calendar_today_outlined,
-                    Icons.calendar_today, 'Calendar'),
-                _buildNavItem(2, Icons.person_outline, Icons.person, 'Profile'),
+                Flexible(
+                    child: _buildNavItem(
+                        0, Icons.home_outlined, Icons.home, 'Home')),
+                Flexible(
+                    child: _buildNavItem(1, Icons.calendar_today_outlined,
+                        Icons.calendar_today, 'Calendar')),
+                Flexible(
+                    child: _buildNavItem(
+                        2, Icons.person_outline, Icons.person, 'Profile')),
               ],
             ),
           ),
@@ -68,6 +76,7 @@ class _MainShellState extends State<MainShell> {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 isActive ? activeIcon : icon,

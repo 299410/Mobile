@@ -13,6 +13,9 @@ dependencies:
   # Thư viện gọi mạng xịn nhất
   dio: ^5.4.3
 
+  # Secure storage for auth tokens
+  flutter_secure_storage: ^9.0.0
+
   # Package API cần dùng class User/Schedule từ package Models
   models:
     path: ../models

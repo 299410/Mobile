@@ -83,7 +83,8 @@ class LecturerApi {
       String roundId, DateTime date, bool isAvailable) async {
     try {
       final token = _authState.accessToken;
-      final userId = _authState.userId; // Get userId from token
+      final userId = _authState.userId;
+      final lecturerId = _authState.lecturerId;
 
       if (userId == null) {
         print('Warning: UserId is null in AuthState');
@@ -92,14 +93,12 @@ class LecturerApi {
       final dateString = date.toIso8601String().split('T')[0]; // yyyy-MM-dd
 
       if (isAvailable) {
-        // REGISTER
+        // REGISTER - uses userId (backend will lookup lecturerId)
         await _dio.post(
           '/v1/availability',
           data: {
-            'userId':
-                userId, // Send userId instead of lecturerId since we updated backend
+            'userId': userId,
             'username': _authState.username, // Fallback if userId is missing
-            // 'lecturerId': ... (no longer needed if userId is present)
             'roundId': roundId,
             'availableDate': dateString,
           },
@@ -108,30 +107,50 @@ class LecturerApi {
               : null,
         );
       } else {
-        // UNREGISTER (DELETE)
+        // UNREGISTER (DELETE) - uses lecturerId as expected by backend
+        if (lecturerId == null) {
+          throw Exception('Lecturer ID not found. Please re-login.');
+        }
         await _dio.delete(
-          '/v1/availability/lecturer/$userId/round/$roundId/date/$dateString',
+          '/v1/availability/lecturer/$lecturerId/round/$roundId/date/$dateString',
           options: token != null
               ? Options(headers: {'Authorization': 'Bearer $token'})
               : null,
         );
       }
     } on DioException catch (e) {
-      throw Exception('Network error: ${e.message}');
+      // Extract error message from backend response
+      String errorMessage = 'Network error';
+      if (e.response?.data != null) {
+        final data = e.response!.data;
+        if (data is Map) {
+          // Try common error message fields
+          errorMessage = data['message'] ??
+              data['error'] ??
+              data['reason'] ??
+              e.message ??
+              'Unknown error';
+        } else if (data is String) {
+          errorMessage = data;
+        }
+      } else {
+        errorMessage = e.message ?? 'Network error';
+      }
+      throw Exception(errorMessage);
     }
   }
 
   Future<List<DateTime>> getLecturerAvailability(String roundId) async {
     try {
       final token = _authState.accessToken;
-      final userId = _authState.userId;
+      final lecturerId = _authState.lecturerId;
 
-      if (userId == null) {
-        throw Exception('User ID not found');
+      if (lecturerId == null) {
+        throw Exception('Lecturer ID not found. Please re-login.');
       }
 
       final response = await _dio.get(
-        '/v1/availability/lecturer/$userId/round/$roundId',
+        '/v1/availability/lecturer/$lecturerId/round/$roundId',
         options: token != null
             ? Options(headers: {'Authorization': 'Bearer $token'})
             : null,
@@ -184,12 +203,16 @@ class LecturerApi {
       // Using /v1/users/me as requested
       const String endpoint = '/v1/users/me';
       print('DEBUG: Calling endpoint: $endpoint');
+      print(
+          'DEBUG: Token is ${token == null ? "NULL!" : "present (${token.substring(0, 20)}...)"}');
+
+      if (token == null) {
+        throw Exception('Not authenticated - no access token');
+      }
 
       final response = await _dio.get(
         endpoint,
-        options: token != null
-            ? Options(headers: {'Authorization': 'Bearer $token'})
-            : null,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
 
       if (response.statusCode == 200) {

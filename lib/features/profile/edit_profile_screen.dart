@@ -42,6 +42,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final avatarRadius = screenWidth < 360 ? 40.0 : 50.0;
+    final cameraIconSize = screenWidth < 360 ? 16.0 : 18.0;
+    final cameraPadding = screenWidth < 360 ? 6.0 : 8.0;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
@@ -62,24 +67,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     shape: BoxShape.circle,
                     border: Border.all(color: AppColors.primary, width: 3),
                   ),
-                  child: const CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Color(0xFFE0E0E0),
-                    child: Icon(Icons.person, size: 50, color: Colors.white),
+                  child: CircleAvatar(
+                    radius: avatarRadius,
+                    backgroundColor: const Color(0xFFE0E0E0),
+                    child: Icon(Icons.person,
+                        size: avatarRadius, color: Colors.white),
                   ),
                 ),
                 Positioned(
                   bottom: 0,
                   right: 0,
                   child: Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: EdgeInsets.all(cameraPadding),
                     decoration: BoxDecoration(
                       color: AppColors.primary,
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.white, width: 2),
                     ),
-                    child: const Icon(Icons.camera_alt,
-                        size: 18, color: Colors.white),
+                    child: Icon(Icons.camera_alt,
+                        size: cameraIconSize, color: Colors.white),
                   ),
                 ),
               ],

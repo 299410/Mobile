@@ -147,9 +147,14 @@ class _LecturerAvailabilityScreenState
     } catch (e) {
       if (mounted) {
         setState(() => _processingDayId = null);
+        // Clean up error message by removing "Exception:" prefix
+        String errorMessage = e.toString();
+        if (errorMessage.startsWith('Exception: ')) {
+          errorMessage = errorMessage.replaceFirst('Exception: ', '');
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to update: $e'),
+            content: Text(errorMessage),
             backgroundColor: AppColors.error,
           ),
         );
@@ -159,6 +164,9 @@ class _LecturerAvailabilityScreenState
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.roundName),
@@ -332,8 +340,9 @@ class _LecturerAvailabilityScreenState
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: AppColors.primary,
                                         foregroundColor: AppColors.onPrimary,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 12),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: isSmallScreen ? 12 : 20,
+                                            vertical: isSmallScreen ? 8 : 12),
                                         elevation: 0,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
