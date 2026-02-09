@@ -61,17 +61,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     }
   }
 
-  // Helper to parse 'Block X' to int
-  int _parseSlot(String slotName) {
-    // Expected format 'Block 1', 'Block 2'... or just '1'
-    try {
-      final number = slotName.replaceAll(RegExp(r'[^0-9]'), '');
-      return int.parse(number);
-    } catch (e) {
-      return 1; // Default
-    }
-  }
-
   Map<String, List<_ScheduleEvent>> get _weekSchedule {
     final Map<String, List<_ScheduleEvent>> map = {};
     final weekEnd = _currentWeekStart.add(const Duration(days: 6));
@@ -83,16 +72,18 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           item.date.isBefore(weekEnd.add(const Duration(days: 1)))) {
         // Format Key: Mon-1, Tue-2...
         final dayName = DateFormat('E').format(item.date); // Mon, Tue...
-        final slotNum = _parseSlot(item.slot);
+        final slotNum = item.blockId;
         final key = '$dayName-$slotNum';
 
         if (!map.containsKey(key)) map[key] = [];
 
         map[key]!.add(_ScheduleEvent(
-          title: 'Defense Council',
-          role: item.role,
-          timeRange: 'Block ${item.slot}', // Or map generic times
-          location: item.details,
+          title: item.blockName,
+          role: item.roleName,
+          timeRange: '${item.startTime} - ${item.endTime}',
+          location: item.blockName,
+          lecturerName: item.lecturerName,
+          lecturerEmail: item.lecturerEmail,
         ));
       }
     }
@@ -198,6 +189,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   }
 
   Widget _buildTimetableGrid() {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const slots = [
       'Slot 1',
@@ -209,9 +202,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       'Slot 7'
     ];
 
-    const cellWidth = 140.0;
-    const cellHeight = 90.0;
-    const slotLabelWidth = 80.0;
+    // Responsive cell dimensions based on screen width
+    final cellWidth =
+        (screenWidth < 400 ? 100.0 : (screenWidth < 500 ? 120.0 : 140.0));
+    final cellHeight = screenWidth < 400 ? 75.0 : 90.0;
+    final slotLabelWidth = screenWidth < 400 ? 60.0 : 80.0;
 
     return Padding(
       padding: const EdgeInsets.all(12),
@@ -221,7 +216,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           // Day Headers Row
           Row(
             children: [
-              const SizedBox(width: slotLabelWidth), // Empty corner
+              SizedBox(width: slotLabelWidth), // Empty corner
               ...List.generate(days.length, (index) {
                 final dayDate = _currentWeekStart.add(Duration(days: index));
                 return Container(
@@ -414,6 +409,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               _buildPopupRow(Icons.access_time, 'Time', event.timeRange),
               const SizedBox(height: 16),
               _buildPopupRow(Icons.location_on, 'Location', event.location),
+              const SizedBox(height: 16),
+              _buildPopupRow(Icons.school, 'Lecturer',
+                  '${event.lecturerName}\n${event.lecturerEmail}'),
               const SizedBox(height: 24),
               // Close button
               SizedBox(
@@ -440,17 +438,22 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   Widget _buildPopupRow(IconData icon, String label, String value) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(icon, size: 20, color: AppColors.primary),
         const SizedBox(width: 12),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(label, style: AppTextStyles.bodyMedium),
-            Text(value,
-                style: AppTextStyles.bodyLarge
-                    .copyWith(fontWeight: FontWeight.w600)),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(label, style: AppTextStyles.bodyMedium),
+              Text(value,
+                  style: AppTextStyles.bodyLarge
+                      .copyWith(fontWeight: FontWeight.w600),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2),
+            ],
+          ),
         ),
       ],
     );
@@ -462,11 +465,15 @@ class _ScheduleEvent {
   final String role;
   final String timeRange;
   final String location;
+  final String lecturerName;
+  final String lecturerEmail;
 
   _ScheduleEvent({
     required this.title,
     required this.role,
     required this.timeRange,
     required this.location,
+    required this.lecturerName,
+    required this.lecturerEmail,
   });
 }

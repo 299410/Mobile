@@ -9,21 +9,35 @@ part of 'defense_schedule.dart';
 _$DefenseScheduleImpl _$$DefenseScheduleImplFromJson(
         Map<String, dynamic> json) =>
     _$DefenseScheduleImpl(
-      id: json['id'] as String,
-      lecturerId: json['lecturerId'] as String,
-      date: DateTime.parse(json['date'] as String),
-      slot: json['slot'] as String,
-      role: json['role'] as String,
-      details: json['details'] as String,
+      assignmentId: (json['assignmentId'] as num).toInt(),
+      blockId: (json['blockId'] as num).toInt(),
+      blockName: json['blockName'] as String,
+      defenseDate: json['defenseDate'] as String,
+      startTime: json['startTime'] as String,
+      endTime: json['endTime'] as String,
+      lecturerId: (json['lecturerId'] as num).toInt(),
+      lecturerCode: json['lecturerCode'] as String,
+      lecturerName: json['lecturerName'] as String,
+      lecturerEmail: json['lecturerEmail'] as String,
+      roleId: (json['roleId'] as num).toInt(),
+      roleCode: json['roleCode'] as String,
+      roleName: json['roleName'] as String,
     );
 
 Map<String, dynamic> _$$DefenseScheduleImplToJson(
         _$DefenseScheduleImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'assignmentId': instance.assignmentId,
+      'blockId': instance.blockId,
+      'blockName': instance.blockName,
+      'defenseDate': instance.defenseDate,
+      'startTime': instance.startTime,
+      'endTime': instance.endTime,
       'lecturerId': instance.lecturerId,
-      'date': instance.date.toIso8601String(),
-      'slot': instance.slot,
-      'role': instance.role,
-      'details': instance.details,
+      'lecturerCode': instance.lecturerCode,
+      'lecturerName': instance.lecturerName,
+      'lecturerEmail': instance.lecturerEmail,
+      'roleId': instance.roleId,
+      'roleCode': instance.roleCode,
+      'roleName': instance.roleName,
     };

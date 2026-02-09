@@ -6,14 +6,25 @@ part 'defense_schedule.g.dart';
 @freezed
 class DefenseSchedule with _$DefenseSchedule {
   factory DefenseSchedule({
-    required String id,
-    required String lecturerId,
-    required DateTime date,
-    required String slot, // 'Block 1', 'Block 2'
-    required String role, // 'President', 'Secretary', 'Member'
-    required String details, // 'Room 201'
+    required int assignmentId,
+    required int blockId,
+    required String blockName,
+    required String defenseDate,
+    required String startTime,
+    required String endTime,
+    required int lecturerId,
+    required String lecturerCode,
+    required String lecturerName,
+    required String lecturerEmail,
+    required int roleId,
+    required String roleCode,
+    required String roleName,
   }) = _DefenseSchedule;
 
   factory DefenseSchedule.fromJson(Map<String, dynamic> json) =>
       _$DefenseScheduleFromJson(json);
+
+  const DefenseSchedule._();
+
+  DateTime get date => DateTime.parse(defenseDate);
 }

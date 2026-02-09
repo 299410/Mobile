@@ -20,13 +20,19 @@ DefenseSchedule _$DefenseScheduleFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DefenseSchedule {
-  String get id => throw _privateConstructorUsedError;
-  String get lecturerId => throw _privateConstructorUsedError;
-  DateTime get date => throw _privateConstructorUsedError;
-  String get slot => throw _privateConstructorUsedError; // 'Block 1', 'Block 2'
-  String get role =>
-      throw _privateConstructorUsedError; // 'President', 'Secretary', 'Member'
-  String get details => throw _privateConstructorUsedError;
+  int get assignmentId => throw _privateConstructorUsedError;
+  int get blockId => throw _privateConstructorUsedError;
+  String get blockName => throw _privateConstructorUsedError;
+  String get defenseDate => throw _privateConstructorUsedError;
+  String get startTime => throw _privateConstructorUsedError;
+  String get endTime => throw _privateConstructorUsedError;
+  int get lecturerId => throw _privateConstructorUsedError;
+  String get lecturerCode => throw _privateConstructorUsedError;
+  String get lecturerName => throw _privateConstructorUsedError;
+  String get lecturerEmail => throw _privateConstructorUsedError;
+  int get roleId => throw _privateConstructorUsedError;
+  String get roleCode => throw _privateConstructorUsedError;
+  String get roleName => throw _privateConstructorUsedError;
 
   /// Serializes this DefenseSchedule to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -45,12 +51,19 @@ abstract class $DefenseScheduleCopyWith<$Res> {
       _$DefenseScheduleCopyWithImpl<$Res, DefenseSchedule>;
   @useResult
   $Res call(
-      {String id,
-      String lecturerId,
-      DateTime date,
-      String slot,
-      String role,
-      String details});
+      {int assignmentId,
+      int blockId,
+      String blockName,
+      String defenseDate,
+      String startTime,
+      String endTime,
+      int lecturerId,
+      String lecturerCode,
+      String lecturerName,
+      String lecturerEmail,
+      int roleId,
+      String roleCode,
+      String roleName});
 }
 
 /// @nodoc
@@ -68,37 +81,72 @@ class _$DefenseScheduleCopyWithImpl<$Res, $Val extends DefenseSchedule>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? assignmentId = null,
+    Object? blockId = null,
+    Object? blockName = null,
+    Object? defenseDate = null,
+    Object? startTime = null,
+    Object? endTime = null,
     Object? lecturerId = null,
-    Object? date = null,
-    Object? slot = null,
-    Object? role = null,
-    Object? details = null,
+    Object? lecturerCode = null,
+    Object? lecturerName = null,
+    Object? lecturerEmail = null,
+    Object? roleId = null,
+    Object? roleCode = null,
+    Object? roleName = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      assignmentId: null == assignmentId
+          ? _value.assignmentId
+          : assignmentId // ignore: cast_nullable_to_non_nullable
+              as int,
+      blockId: null == blockId
+          ? _value.blockId
+          : blockId // ignore: cast_nullable_to_non_nullable
+              as int,
+      blockName: null == blockName
+          ? _value.blockName
+          : blockName // ignore: cast_nullable_to_non_nullable
+              as String,
+      defenseDate: null == defenseDate
+          ? _value.defenseDate
+          : defenseDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
               as String,
       lecturerId: null == lecturerId
           ? _value.lecturerId
           : lecturerId // ignore: cast_nullable_to_non_nullable
+              as int,
+      lecturerCode: null == lecturerCode
+          ? _value.lecturerCode
+          : lecturerCode // ignore: cast_nullable_to_non_nullable
               as String,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      slot: null == slot
-          ? _value.slot
-          : slot // ignore: cast_nullable_to_non_nullable
+      lecturerName: null == lecturerName
+          ? _value.lecturerName
+          : lecturerName // ignore: cast_nullable_to_non_nullable
               as String,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
+      lecturerEmail: null == lecturerEmail
+          ? _value.lecturerEmail
+          : lecturerEmail // ignore: cast_nullable_to_non_nullable
               as String,
-      details: null == details
-          ? _value.details
-          : details // ignore: cast_nullable_to_non_nullable
+      roleId: null == roleId
+          ? _value.roleId
+          : roleId // ignore: cast_nullable_to_non_nullable
+              as int,
+      roleCode: null == roleCode
+          ? _value.roleCode
+          : roleCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      roleName: null == roleName
+          ? _value.roleName
+          : roleName // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -113,12 +161,19 @@ abstract class _$$DefenseScheduleImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
-      String lecturerId,
-      DateTime date,
-      String slot,
-      String role,
-      String details});
+      {int assignmentId,
+      int blockId,
+      String blockName,
+      String defenseDate,
+      String startTime,
+      String endTime,
+      int lecturerId,
+      String lecturerCode,
+      String lecturerName,
+      String lecturerEmail,
+      int roleId,
+      String roleCode,
+      String roleName});
 }
 
 /// @nodoc
@@ -134,37 +189,72 @@ class __$$DefenseScheduleImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? assignmentId = null,
+    Object? blockId = null,
+    Object? blockName = null,
+    Object? defenseDate = null,
+    Object? startTime = null,
+    Object? endTime = null,
     Object? lecturerId = null,
-    Object? date = null,
-    Object? slot = null,
-    Object? role = null,
-    Object? details = null,
+    Object? lecturerCode = null,
+    Object? lecturerName = null,
+    Object? lecturerEmail = null,
+    Object? roleId = null,
+    Object? roleCode = null,
+    Object? roleName = null,
   }) {
     return _then(_$DefenseScheduleImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      assignmentId: null == assignmentId
+          ? _value.assignmentId
+          : assignmentId // ignore: cast_nullable_to_non_nullable
+              as int,
+      blockId: null == blockId
+          ? _value.blockId
+          : blockId // ignore: cast_nullable_to_non_nullable
+              as int,
+      blockName: null == blockName
+          ? _value.blockName
+          : blockName // ignore: cast_nullable_to_non_nullable
+              as String,
+      defenseDate: null == defenseDate
+          ? _value.defenseDate
+          : defenseDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
               as String,
       lecturerId: null == lecturerId
           ? _value.lecturerId
           : lecturerId // ignore: cast_nullable_to_non_nullable
+              as int,
+      lecturerCode: null == lecturerCode
+          ? _value.lecturerCode
+          : lecturerCode // ignore: cast_nullable_to_non_nullable
               as String,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      slot: null == slot
-          ? _value.slot
-          : slot // ignore: cast_nullable_to_non_nullable
+      lecturerName: null == lecturerName
+          ? _value.lecturerName
+          : lecturerName // ignore: cast_nullable_to_non_nullable
               as String,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
+      lecturerEmail: null == lecturerEmail
+          ? _value.lecturerEmail
+          : lecturerEmail // ignore: cast_nullable_to_non_nullable
               as String,
-      details: null == details
-          ? _value.details
-          : details // ignore: cast_nullable_to_non_nullable
+      roleId: null == roleId
+          ? _value.roleId
+          : roleId // ignore: cast_nullable_to_non_nullable
+              as int,
+      roleCode: null == roleCode
+          ? _value.roleCode
+          : roleCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      roleName: null == roleName
+          ? _value.roleName
+          : roleName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -172,36 +262,56 @@ class __$$DefenseScheduleImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$DefenseScheduleImpl implements _DefenseSchedule {
+class _$DefenseScheduleImpl extends _DefenseSchedule {
   _$DefenseScheduleImpl(
-      {required this.id,
+      {required this.assignmentId,
+      required this.blockId,
+      required this.blockName,
+      required this.defenseDate,
+      required this.startTime,
+      required this.endTime,
       required this.lecturerId,
-      required this.date,
-      required this.slot,
-      required this.role,
-      required this.details});
+      required this.lecturerCode,
+      required this.lecturerName,
+      required this.lecturerEmail,
+      required this.roleId,
+      required this.roleCode,
+      required this.roleName})
+      : super._();
 
   factory _$DefenseScheduleImpl.fromJson(Map<String, dynamic> json) =>
       _$$DefenseScheduleImplFromJson(json);
 
   @override
-  final String id;
+  final int assignmentId;
   @override
-  final String lecturerId;
+  final int blockId;
   @override
-  final DateTime date;
+  final String blockName;
   @override
-  final String slot;
-// 'Block 1', 'Block 2'
+  final String defenseDate;
   @override
-  final String role;
-// 'President', 'Secretary', 'Member'
+  final String startTime;
   @override
-  final String details;
+  final String endTime;
+  @override
+  final int lecturerId;
+  @override
+  final String lecturerCode;
+  @override
+  final String lecturerName;
+  @override
+  final String lecturerEmail;
+  @override
+  final int roleId;
+  @override
+  final String roleCode;
+  @override
+  final String roleName;
 
   @override
   String toString() {
-    return 'DefenseSchedule(id: $id, lecturerId: $lecturerId, date: $date, slot: $slot, role: $role, details: $details)';
+    return 'DefenseSchedule(assignmentId: $assignmentId, blockId: $blockId, blockName: $blockName, defenseDate: $defenseDate, startTime: $startTime, endTime: $endTime, lecturerId: $lecturerId, lecturerCode: $lecturerCode, lecturerName: $lecturerName, lecturerEmail: $lecturerEmail, roleId: $roleId, roleCode: $roleCode, roleName: $roleName)';
   }
 
   @override
@@ -209,19 +319,48 @@ class _$DefenseScheduleImpl implements _DefenseSchedule {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DefenseScheduleImpl &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.assignmentId, assignmentId) ||
+                other.assignmentId == assignmentId) &&
+            (identical(other.blockId, blockId) || other.blockId == blockId) &&
+            (identical(other.blockName, blockName) ||
+                other.blockName == blockName) &&
+            (identical(other.defenseDate, defenseDate) ||
+                other.defenseDate == defenseDate) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
             (identical(other.lecturerId, lecturerId) ||
                 other.lecturerId == lecturerId) &&
-            (identical(other.date, date) || other.date == date) &&
-            (identical(other.slot, slot) || other.slot == slot) &&
-            (identical(other.role, role) || other.role == role) &&
-            (identical(other.details, details) || other.details == details));
+            (identical(other.lecturerCode, lecturerCode) ||
+                other.lecturerCode == lecturerCode) &&
+            (identical(other.lecturerName, lecturerName) ||
+                other.lecturerName == lecturerName) &&
+            (identical(other.lecturerEmail, lecturerEmail) ||
+                other.lecturerEmail == lecturerEmail) &&
+            (identical(other.roleId, roleId) || other.roleId == roleId) &&
+            (identical(other.roleCode, roleCode) ||
+                other.roleCode == roleCode) &&
+            (identical(other.roleName, roleName) ||
+                other.roleName == roleName));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, lecturerId, date, slot, role, details);
+  int get hashCode => Object.hash(
+      runtimeType,
+      assignmentId,
+      blockId,
+      blockName,
+      defenseDate,
+      startTime,
+      endTime,
+      lecturerId,
+      lecturerCode,
+      lecturerName,
+      lecturerEmail,
+      roleId,
+      roleCode,
+      roleName);
 
   /// Create a copy of DefenseSchedule
   /// with the given fields replaced by the non-null parameter values.
@@ -240,30 +379,52 @@ class _$DefenseScheduleImpl implements _DefenseSchedule {
   }
 }
 
-abstract class _DefenseSchedule implements DefenseSchedule {
+abstract class _DefenseSchedule extends DefenseSchedule {
   factory _DefenseSchedule(
-      {required final String id,
-      required final String lecturerId,
-      required final DateTime date,
-      required final String slot,
-      required final String role,
-      required final String details}) = _$DefenseScheduleImpl;
+      {required final int assignmentId,
+      required final int blockId,
+      required final String blockName,
+      required final String defenseDate,
+      required final String startTime,
+      required final String endTime,
+      required final int lecturerId,
+      required final String lecturerCode,
+      required final String lecturerName,
+      required final String lecturerEmail,
+      required final int roleId,
+      required final String roleCode,
+      required final String roleName}) = _$DefenseScheduleImpl;
+  _DefenseSchedule._() : super._();
 
   factory _DefenseSchedule.fromJson(Map<String, dynamic> json) =
       _$DefenseScheduleImpl.fromJson;
 
   @override
-  String get id;
+  int get assignmentId;
   @override
-  String get lecturerId;
+  int get blockId;
   @override
-  DateTime get date;
+  String get blockName;
   @override
-  String get slot; // 'Block 1', 'Block 2'
+  String get defenseDate;
   @override
-  String get role; // 'President', 'Secretary', 'Member'
+  String get startTime;
   @override
-  String get details;
+  String get endTime;
+  @override
+  int get lecturerId;
+  @override
+  String get lecturerCode;
+  @override
+  String get lecturerName;
+  @override
+  String get lecturerEmail;
+  @override
+  int get roleId;
+  @override
+  String get roleCode;
+  @override
+  String get roleName;
 
   /// Create a copy of DefenseSchedule
   /// with the given fields replaced by the non-null parameter values.

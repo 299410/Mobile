@@ -1,0 +1,8 @@
+Analyzing lecturer_availability_screen.dart...                  
+
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\lecturer\lecturer_availability_screen.dart:147:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\lecturer\lecturer_availability_screen.dart:153:53 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\lecturer\lecturer_availability_screen.dart:157:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\lecturer\lecturer_availability_screen.dart:187:59 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\lecturer\lecturer_availability_screen.dart:189:44 - deprecated_member_use
+

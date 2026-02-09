@@ -1,0 +1,4 @@
+Analyzing 2 items...                                            
+
+   info - The import of 'auth_state.dart' is unnecessary because all of the used elements are also provided by the import of '../api.dart' - packages\api\lib\src\lecturer_api.dart:4:8 - unnecessary_import
+
